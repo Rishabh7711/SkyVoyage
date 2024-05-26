@@ -1,0 +1,77 @@
+/* src/styles/Footer.css */
+footer {
+  background: linear-gradient(to right, #360dbb, #6a1b9a); /* Gradient background color */
+  padding: 1rem 2rem;
+  color: #f4f8fc; /* Light font color */
+  text-align: center;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  z-index: 1000; /* Ensure the footer is on top */
+  box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.2); /* Increased box-shadow */
+  font-size: 1.2rem; /* Increased font size */
+  transition: background-color 0.3s; /* Transition for hover effect */
+  display: flex;
+  justify-content: center; /* Center the footer content horizontally */
+  align-items: center;
+}
+
+footer p {
+  margin: 0;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3); /* Text shadow for footer text */
+}
+
+footer nav {
+  display: flex;
+  align-items: center;
+  margin-left: 2rem; /* Add some spacing between footer text and navigation */
+}
+
+footer nav ul {
+  list-style: none;
+  display: flex;
+  padding: 0;
+  margin: 0;
+  align-items: center; /* Center the navigation items vertically */
+}
+
+footer nav ul li {
+  margin: 0 1rem; /* Increased margin */
+  position: relative; /* Add position relative for pseudo-element */
+}
+
+footer nav ul li a {
+  color: #f4f8fc; /* Light font color */
+  text-decoration: none;
+  font-weight: bold;
+  font-size: 1.2rem; /* Increased font size for navigation links */
+  transition: color 0.3s; /* Transition for hover effect */
+  padding: 0.5rem; /* Add some padding for better clickability */
+  border-radius: 0.25rem; /* Add a subtle border radius */
+  position: relative; /* Add position relative for pseudo-element */
+}
+
+footer nav ul li a:hover {
+  color: #34ae08; /* Change text color on hover */
+  background-color: rgba(255, 255, 255, 0.1); /* Add a subtle background on hover */
+}
+
+footer nav ul li a::before {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background-color: #34ae08; /* Underline color */
+  transition: width 0.3s ease-in-out; /* Transition for underline animation */
+}
+
+footer nav ul li a:hover::before {
+  width: 100%; /* Underline animation on hover */
+}
+
+footer:hover {
+  background: linear-gradient(to right, #6a1b9a, #360dbb); /* Reverse gradient on hover */
+}
