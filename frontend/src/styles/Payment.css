@@ -6,10 +6,18 @@ body {
   font-family: 'Poppins', sans-serif;
   font-size: 16px;
   line-height: 1.6;
-  color: #333;
+  color: #333; /* Updated text color for better readability */
   margin: 0;
   padding: 0;
-  background-color: #f8f8f8;
+  background-color: #f8f8f8; /* Updated background color for a fresh look */
+}
+
+html,
+body {
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 /* Payment Container */
@@ -22,37 +30,36 @@ body {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding: 40px;
-  margin-top: 10px;
-  border-radius: 20px;
-  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
-  min-width: 600px;
-  max-width: 800px;
-  height: 600px;
-  background-color: #fff;
-  background-image: linear-gradient(to bottom right, #fff, #f2f2f2);
+  padding: 30px;
+  border-radius: 12px; /* Consistent with search-flight container */
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1); /* Reduced shadow for consistency */
+  min-width: 600px; /* Adjusted minimum width for consistency */
+  max-width: 700px; /* Consistent with search-flight container */
+  background-color: #ffffff; /* White background for the container */
+  background-image: linear-gradient(to bottom right, #ffffff, #f2f2f2); /* Consistent gradient */
 }
 
+/* Heading styling */
 .payment-container h2 {
-  text-align: center;
-  margin-bottom: 40px;
-  font-size: 36px;
-  color: #333;
-  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+  margin-bottom: 2rem; /* Reduced bottom margin for consistency */
+  font-size: 1.8rem; /* Consistent font size with search-flight */
+  color: #4a4a4a; /* Darker color for better contrast */
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1); /* Subtle shadow for consistency */
   position: relative;
 }
 
+/* Heading underline styling */
 .payment-container h2::after {
   content: "";
   position: absolute;
-  bottom: -10px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 80px;
-  height: 3px;
-  background-color: #007bff;
+  bottom: -10px; /* Adjusted position for consistency */
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background-color: #007bff; /* Blue underline for consistency */
 }
 
+/* Form styling */
 .payment-form {
   width: 100%;
   display: flex;
@@ -60,73 +67,94 @@ body {
   align-items: center;
 }
 
+/* Form row styling */
 .form-row {
-  margin-bottom: 30px;
+  margin-bottom: 20px; /* Reduced margin for consistency */
   width: 100%;
   display: flex;
   justify-content: space-between;
   align-items: center;
+  flex-wrap: wrap; /* Allows wrapping on smaller screens */
 }
 
+/* Form row label styling */
 .form-row label {
   display: block;
   font-weight: 500;
-  margin-bottom: 10px;
-  color: #555;
-  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
-  font-size: 1.1rem;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
+  margin-bottom: 5px; /* Adjusted margin */
+  color: #4a4a4a; /* Consistent label color */
+  font-size: 1.2rem; /* Increased font size for readability */
+  text-transform: capitalize; /* Changed to capitalize */
+  letter-spacing: 0.5px; /* Adjusted letter-spacing */
 }
 
+/* Form input and select styling */
 .form-row input,
 .form-row select {
   width: 48%;
-  padding: 14px 16px;
-  border: 1px solid #ccc;
-  border-radius: 8px;
-  font-size: 16px;
-  background-color: #f8f8f8;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  padding: 15px;
+  border: 1px solid #ccc; /* Light grey border */
+  border-radius: 10px; /* Increased border radius for consistency */
+  font-size: 1.2rem; /* Increased font size */
+  background-color: #ffffff; /* White background for inputs */
+  box-shadow: inset 0 2px 6px rgba(0, 0, 0, 0.1); /* Consistent box shadow */
   transition: border-color 0.3s ease, box-shadow 0.3s ease;
 }
 
+/* Input and select focus state */
 .form-row input:focus,
 .form-row select:focus {
   outline: none;
-  border-color: #007bff;
-  box-shadow: 0 0 8px rgba(0, 123, 255, 0.5);
+  border-color: #007bff; /* Blue focus border */
+  box-shadow: 0 0 5px rgba(0, 123, 255, 0.5); /* Blue shadow */
 }
 
-.form-row .col-md-6 {
-  width: 48%;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-}
-
+/* Button styling */
 .btn {
   display: block;
   width: 100%;
-  max-width: 300px;
-  margin: 40px auto 0;
-  padding: 16px;
-  background-color: #007bff;
-  color: #fff;
+  max-width: 280px; /* Adjusted max-width */
+  margin: 30px auto 0; /* Adjusted margin for consistency */
+  padding: 14px;
+  background-color: #00796b; /* Teal button color */
+  color: #ffffff; /* White text color */
   border: none;
-  border-radius: 30px;
+  border-radius: 30px; /* Rounded corners for consistency */
   cursor: pointer;
-  transition: background-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
-  font-size: 18px;
-  font-weight: 600;
+  transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
+  font-size: 16px; /* Consistent font size */
+  font-weight: 600; /* Bold text for emphasis */
   text-transform: uppercase;
-  letter-spacing: 0.5px;
-  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
-  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+  letter-spacing: 0.5px; /* Consistent letter-spacing */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Softer shadow */
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.05); /* Subtle shadow */
 }
 
+/* Button hover effect */
 .btn:hover {
-  background-color: #0056b3;
-  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
-  transform: translateY(-2px);
+  background-color: #004d40; /* Darker teal on hover for visual feedback */
+  transform: scale(1.05); /* Slightly enlarge the button on hover */
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .form-row {
+    flex-direction: column;
+    align-items: stretch; /* Stretch to full width */
+  }
+
+  .form-row label {
+    margin-bottom: 5px;
+    font-size: 1rem; /* Adjusted font size */
+  }
+
+  .form-row input,
+  .form-row select {
+    width: 100%;
+    max-width: none; /* Remove max-width restriction */
+  }
+
+  .btn {
+    max-width: 100%; /* Full width button on smaller screens */
+  }
 }

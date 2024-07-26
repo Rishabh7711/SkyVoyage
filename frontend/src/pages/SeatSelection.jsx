@@ -2,134 +2,134 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import '../styles/SeatSelection.css';
 
-const SeatSelection = ({ flight }) => {
+const SeatPicker = ({ selectedFlight }) => {
   const navigate = useNavigate();
-  const [selectedSeats, setSelectedSeats] = useState([]);
-  const [ticketPrice, setTicketPrice] = useState(0);
-  const [fireExitResponsibility, setFireExitResponsibility] = useState(false);
-  const [isBookingInProgress, setIsBookingInProgress] = useState(false);
-  const [seatLockTimer, setSeatLockTimer] = useState(null);
+  const [chosenSeats, setChosenSeats] = useState([]);
+  const [totalPrice, setTotalPrice] = useState(0);
+  const [fireExitAccepted, setFireExitAccepted] = useState(false);
+  const [bookingInProgress, setBookingInProgress] = useState(false);
+  const [seatTimer, setSeatTimer] = useState(null);
   const [confirmedSeats, setConfirmedSeats] = useState([]);
-  const [bookedSeats, setBookedSeats] = useState(['1A', '2B', '5C', '12D']); // Example booked seats
+  const [reservedSeats, setReservedSeats] = useState(['1A', '2B', '5C', '12D']);
   const [showFireExitModal, setShowFireExitModal] = useState(false);
 
-  const classPrices = {
-    first: 1000, // Changed the price for first class
-    business: 500, // Changed the price for business class
-    economy: 200, // Changed the price for economy class
+  const seatPrices = {
+    first: 1000,
+    business: 500,
+    economy: 200,
   };
 
-  const seatStructure = {
-    first: { rows: 4, seats: [2, 2], layout: ['TT', 'SS', 'SS', 'KK'] },
-    business: { rows: 6, seats: [2, 2], layout: ['SS', 'SS', 'SS', 'SS', 'SS', 'EE'] },
-    economy: { rows: 20, seats: [3, 3], layout: ['SSS', 'SSS', 'SSS', 'SSS', 'SSS', 'SSS', 'SSS', 'SSS', 'SSS', 'SSS', 'SSS', 'SSS', 'SSS', 'SSS', 'SSS', 'SSS', 'SSS', 'EE', 'TT'] },
+  const seatLayouts = {
+    first: { rows: 1, seats: [1, 1], layout: ['SS', 'SS', 'SS', 'SS'] },
+    business: { rows: 2, seats: [2, 2], layout: ['SS', 'SS', 'SS', 'SS', 'SS', 'SS'] },
+    economy: { rows: 2, seats: [3, 3], layout: ['SSS', 'SSS', 'SSS', 'SSS', 'SSS', 'SSS', 'SSS', 'SSS', 'SSS', 'SSS'] },
   };
 
   const fireExitSeats = {
     first: ['1A', '1B', '2A', '2B'],
     business: ['5A', '5B', '6A', '6B'],
-    economy: ['12A', '12B', '12C', '13A', '13B', '13C'],
+    economy: ['10A', '10B', '10C'],
   };
 
   useEffect(() => {
-    if (isBookingInProgress) {
+    if (bookingInProgress) {
       const timer = setTimeout(() => {
-        setSelectedSeats([]);
-        setIsBookingInProgress(false);
+        setChosenSeats([]);
+        setBookingInProgress(false);
         alert('Your selected seats have been released due to inactivity.');
       }, 600000);
 
       return () => clearTimeout(timer);
     }
-  }, [isBookingInProgress]);
+  }, [bookingInProgress]);
 
-  const handleSeatClick = (seatId, classType) => {
-    if (bookedSeats.includes(seatId)) {
-      alert('This seat is already booked.');
+  const handleSeatSelection = (seatId, classType) => {
+    if (reservedSeats.includes(seatId)) {
+      alert('This seat is already reserved.');
       return;
     }
 
-    if (fireExitSeats[classType].includes(seatId) && !fireExitResponsibility) {
+    if (fireExitSeats[classType].includes(seatId) && !fireExitAccepted) {
       setShowFireExitModal(true);
       return;
     }
 
-    if (selectedSeats.length >= 6 && !selectedSeats.includes(seatId)) {
-      alert('You cannot book more than 6 seats at once.');
+    if (chosenSeats.length >= 6 && !chosenSeats.includes(seatId)) {
+      alert('You cannot select more than 6 seats at once.');
       return;
     }
 
-    const newSelectedSeats = selectedSeats.includes(seatId)
-      ? selectedSeats.filter(seat => seat !== seatId)
-      : [...selectedSeats, seatId];
+    const newSelectedSeats = chosenSeats.includes(seatId)
+      ? chosenSeats.filter(seat => seat !== seatId)
+      : [...chosenSeats, seatId];
 
-    setSelectedSeats(newSelectedSeats);
-    setTicketPrice(calculateTicketPrice(newSelectedSeats, classPrices));
+    setChosenSeats(newSelectedSeats);
+    setTotalPrice(calculateTotalPrice(newSelectedSeats, seatPrices));
 
-    setIsBookingInProgress(true);
-    clearTimeout(seatLockTimer);
-    setSeatLockTimer(setTimeout(() => {
-      setSelectedSeats([]);
-      setIsBookingInProgress(false);
+    setBookingInProgress(true);
+    clearTimeout(seatTimer);
+    setSeatTimer(setTimeout(() => {
+      setChosenSeats([]);
+      setBookingInProgress(false);
       alert('Your selected seats have been released due to inactivity.');
     }, 600000));
   };
 
-  const handleFireExitResponsibilityChange = (event) => {
-    setFireExitResponsibility(event.target.checked);
+  const handleFireExitAcceptance = (event) => {
+    setFireExitAccepted(event.target.checked);
     setShowFireExitModal(false);
   };
 
-  const calculateTicketPrice = (selectedSeats, classPrices) => {
-    const classTypes = selectedSeats.map(seatId => getClassType(seatId));
+  const calculateTotalPrice = (chosenSeats, seatPrices) => {
+    const classTypes = chosenSeats.map(seatId => determineClassType(seatId));
     const uniqueClassTypes = [...new Set(classTypes)];
 
     return uniqueClassTypes.reduce((total, classType) => {
-      const seatsOfType = selectedSeats.filter(seatId => getClassType(seatId) === classType);
-      return total + seatsOfType.length * classPrices[classType];
+      const seatsOfType = chosenSeats.filter(seatId => determineClassType(seatId) === classType);
+      return total + seatsOfType.length * seatPrices[classType];
     }, 0);
   };
 
-  const getClassType = (seatId) => {
+  const determineClassType = (seatId) => {
     const rowNumber = parseInt(seatId.match(/\d+/)[0], 10);
     if (rowNumber <= 4) return 'first';
     if (rowNumber <= 10) return 'business';
     return 'economy';
   };
 
-  const handleBooking = () => {
-    if (selectedSeats.length === 0) {
-      alert('Please select at least one seat before booking.');
+  const handleProceedToPayment = () => {
+    if (chosenSeats.length === 0) {
+      alert('Please select at least one seat before proceeding to payment.');
       return;
     }
-    setConfirmedSeats([...confirmedSeats, ...selectedSeats]);
-    setSelectedSeats([]);
+    setConfirmedSeats([...confirmedSeats, ...chosenSeats]);
+    setChosenSeats([]);
 
-    navigate('/bookingConfirm', { state: { selectedFlight: flight, selectedSeats, ticketPrice } });
+    navigate('/payment', { state: { selectedFlight, chosenSeats, totalPrice } });
   };
 
-  const handleCancellation = (seatId) => {
-    if (isWithinCancellationPeriod()) {
+  const handleSeatCancellation = (seatId) => {
+    if (canCancelBooking()) {
       setConfirmedSeats(confirmedSeats.filter(seat => seat !== seatId));
-      setBookedSeats(bookedSeats.filter(seat => seat !== seatId));
+      setReservedSeats(reservedSeats.filter(seat => seat !== seatId));
     } else {
       alert('Tickets cannot be cancelled within 72 hours of departure.');
     }
   };
 
-  const isWithinCancellationPeriod = () => {
+  const canCancelBooking = () => {
     const currentTime = new Date();
-    const departureTime = new Date(flight.departureTime);
+    const departureTime = new Date(selectedFlight.departureTime);
     const timeDifference = departureTime - currentTime;
     const hoursDifference = timeDifference / (1000 * 60 * 60);
     return hoursDifference > 72;
   };
 
-  const renderSeats = (classType, { rows, seats, layout }) => {
+  const renderSeatLayout = (classType, { rows, seats, layout }) => {
     const seatRows = [];
     let rowNumber = 1;
     if (classType === 'business') rowNumber = 5;
-    else if (classType === 'economy') rowNumber = 12;
+    else if (classType === 'economy') rowNumber = 11;
 
     for (let row = 1; row <= rows; row++) {
       const seatRow = [];
@@ -138,10 +138,10 @@ const SeatSelection = ({ flight }) => {
 
       for (let seat = 1; seat <= seats[0]; seat++) {
         const seatId = `${rowNumber}${String.fromCharCode(64 + seat)}`;
-        const seatClass = selectedSeats.includes(seatId)
+        const seatClass = chosenSeats.includes(seatId)
           ? 'selected'
-          : bookedSeats.includes(seatId)
-          ? 'booked'
+          : reservedSeats.includes(seatId)
+          ? 'reserved'
           : confirmedSeats.includes(seatId)
           ? 'confirmed'
           : 'available';
@@ -150,7 +150,7 @@ const SeatSelection = ({ flight }) => {
           <div
             key={`left-${seatId}`}
             className={`seat ${seatClass}`}
-            onClick={() => handleSeatClick(seatId, classType)}
+            onClick={() => handleSeatSelection(seatId, classType)}
           >
             {seatId}
           </div>
@@ -159,10 +159,10 @@ const SeatSelection = ({ flight }) => {
 
       for (let seat = seats[0] + 1; seat <= seats[0] + seats[1]; seat++) {
         const seatId = `${rowNumber}${String.fromCharCode(64 + seat)}`;
-        const seatClass = selectedSeats.includes(seatId)
+        const seatClass = chosenSeats.includes(seatId)
           ? 'selected'
-          : bookedSeats.includes(seatId)
-          ? 'booked'
+          : reservedSeats.includes(seatId)
+          ? 'reserved'
           : confirmedSeats.includes(seatId)
           ? 'confirmed'
           : 'available';
@@ -171,7 +171,7 @@ const SeatSelection = ({ flight }) => {
           <div
             key={`right-${seatId}`}
             className={`seat ${seatClass}`}
-            onClick={() => handleSeatClick(seatId, classType)}
+            onClick={() => handleSeatSelection(seatId, classType)}
           >
             {seatId}
           </div>
@@ -207,20 +207,11 @@ const SeatSelection = ({ flight }) => {
       rowNumber++;
     }
 
-    // Adding back toilets, kitchens, and exits
-    seatRows.push(
-      <div className="row" key={`${classType}-back`}>
-        <div className="toilet" key={`toilet-back-${classType}`}>Toilet</div>
-        <div className="kitchen" key={`kitchen-back-${classType}`}>Kitchen</div>
-        <div className="exit" key={`exit-back-${classType}`}>Exit</div>
-      </div>
-    );
-
     return seatRows;
   };
 
   return (
-    <div className="seat-selection">
+    <div className="seat-picker">
       {showFireExitModal && (
         <div className="fire-exit-modal">
           <div className="modal-content">
@@ -228,12 +219,12 @@ const SeatSelection = ({ flight }) => {
             <p>
               You have selected a fire exit seat. Please confirm that you accept the fire exit responsibility and the related financial implications.
             </p>
-            <div>
+            <div className="fire-exit-responsibility">
               <input
                 type="checkbox"
                 id="fire-exit-responsibility"
-                checked={fireExitResponsibility}
-                onChange={handleFireExitResponsibilityChange}
+                checked={fireExitAccepted}
+                onChange={handleFireExitAcceptance}
               />
               <label htmlFor="fire-exit-responsibility">
                 I accept the fire exit responsibility and the related financial implications.
@@ -246,28 +237,42 @@ const SeatSelection = ({ flight }) => {
         <div className="seat-map">
           <div className="cabin first-class">
             <h2>First Class</h2>
-            {renderSeats('first', seatStructure.first)}
+            {renderSeatLayout('first', seatLayouts.first)}
           </div>
           <div className="cabin business-class">
             <h2>Business Class</h2>
-            {renderSeats('business', seatStructure.business)}
+            {renderSeatLayout('business', seatLayouts.business)}
           </div>
           <div className="cabin economy-class">
             <h2>Economy Class</h2>
-            {renderSeats('economy', seatStructure.economy)}
+            {renderSeatLayout('economy', seatLayouts.economy)}
           </div>
         </div>
-      </div>
-      <div className="booking-footer">
-        <div className="ticket-price">
-          Ticket Price: {ticketPrice}$
+        <div className="booking-footer">
+          <div className="total-price">
+            Total Price: {totalPrice}$
+          </div>
+          <div className="booked-seats">
+            <h3>Booked Seats:</h3>
+            <ul>
+              {confirmedSeats.map((seat) => (
+                <li key={seat}>
+                  {seat}
+                  <button onClick={() => handleSeatCancellation(seat)}>Cancel</button>
+                </li>
+              ))}
+            </ul>
+          </div>
+          <button
+            onClick={handleProceedToPayment}
+            disabled={!chosenSeats.length && !confirmedSeats.length}
+          >
+            Proceed to Payment
+          </button>
         </div>
-        <button onClick={handleBooking} disabled={!selectedSeats.length}>
-          Book Selected Seats
-        </button>
       </div>
     </div>
   );
 };
 
-export default SeatSelection;
+export default SeatPicker;

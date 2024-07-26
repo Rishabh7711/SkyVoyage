@@ -1,211 +1,217 @@
-/* styles/Home.css */
+/* Import Google Font */
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap');
 
-
+/* Global Styles */
 html, body {
     height: 100%;
     margin: 0;
     padding: 0;
     font-family: 'Roboto', sans-serif;
-    overflow: hidden; /* Hide the scrollbar */
-  }
-  
-  .main {
-    min-height: 100vh;
-    background-color: #f7f7f7;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    padding: 4rem 2rem; /* Adjust the top and bottom padding as needed */
-  }
-  
-  .form-container {
+    overflow-x: hidden; /* Hide horizontal scrollbar */
+    background-image: url('your-background-image.jpg'); /* Background image */
+    background-size: cover; /* Ensure the image covers the entire viewport */
+    background-position: center; /* Center the image */
+    background-repeat: no-repeat; /* Prevent image from repeating */
+    background-attachment: fixed; /* Keep the background fixed during scrolling */
+}
+
+/* Main Container */
+.main-content {
+    min-height: calc(100vh - 6rem); /* Adjusted to account for header and footer */
+    background-color: rgba(255, 255, 255, 0.85); /* Slightly transparent white */
+    padding: 3rem 2rem; /* Adjusted padding */
+    border-radius: 1rem; /* More rounded corners */
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2); /* Deeper shadow for depth */
+}
+
+/* Form Container */
+.form-section {
     display: flex;
     flex-wrap: wrap;
-    gap: 3rem;
-    max-width: 1200px;
-    width: 100%;
+    gap: 1.5rem; /* Adjusted gap */
+    max-width: 1100px; /* Adjusted max-width */
     margin: 0 auto;
-  }
-  
-  .explore-field,
-  .destinations-field {
-    background-color: #fff;
-    border-radius: 0.5rem;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    padding: 2rem;
-    transition: box-shadow 0.3s ease;
-    flex: 1 1 calc(50% - 1.5rem); /* Adjust this value as needed */
-  }
-  
-  .explore-field:hover,
-  .destinations-field:hover {
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
-  }
-  
-  .button {
-    background-color: #007bff;
-    color: #fff;
+    box-sizing: border-box;
+}
+
+/* Explore Section */
+.explore-section .card {
+    background-color: rgba(255, 255, 255, 0.75); /* More transparent white */
+    border-radius: 1rem; /* More rounded corners */
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.25); /* Darker shadow */
+    padding: 2.5rem; /* Adjusted padding */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Button Styling */
+.cta-button {
+    background-color: #28a745; /* Green button color */
+    color: #ffffff;
     border: none;
-    border-radius: 0.25rem;
+    border-radius: 0.5rem; /* Border radius */
     padding: 0.75rem 1.5rem;
     font-size: 1.1rem;
     cursor: pointer;
-    transition: background-color 0.3s ease;
-  }
-  
-  .button:hover {
-    background-color: #0056b3;
-  }
-  
-  .featured-destinations {
-    display: flex;
-    flex-wrap: nowrap;
-    overflow-x: auto;
-    gap: 2rem;
-    padding-bottom: 1rem; /* Add some padding at the bottom */
-  }
-  
-  .destination-card {
-    background-color: #fff;
-    border-radius: 0.5rem;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: background-color 0.3s ease, transform 0.3s ease;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+.cta-button:hover {
+    background-color: #218838; /* Darker green on hover */
+    transform: translateY(-2px); /* Elevation effect */
+}
+
+/* Destinations Section */
+.destinations-section .card {
+    background-color: rgba(255, 255, 255, 0.75); /* More transparent white */
+    border-radius: 1rem; /* More rounded corners */
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.25); /* Darker shadow */
+    padding: 2.5rem; /* Adjusted padding */
+    box-sizing: border-box;
+}
+
+/* Featured Destinations Grid */
+.destinations-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); /* Adjusted min-width */
+    gap: 1.5rem; /* Adjusted gap */
+}
+
+/* Destination Card */
+.destination-card {
+    background-color: rgba(255, 255, 255, 0.75); /* More transparent white */
+    border-radius: 1rem; /* More rounded corners */
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.25); /* Darker shadow */
     overflow: hidden;
-    transition: box-shadow 0.3s ease;
-    flex: 0 0 calc(33.33% - 1.33rem); /* Adjust this value as needed */
-    min-width: 300px; /* Set a minimum width for the cards */
+    transition: box-shadow 0.3s ease, transform 0.3s ease;
     display: flex;
     flex-direction: column;
-  }
-  
-  .destination-card:hover {
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
-  }
-  
-  .destination-image {
+}
+
+.destination-card:hover {
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3); /* Shadow on hover */
+    transform: translateY(-5px); /* Elevation effect */
+}
+
+/* Destination Image */
+.destination-img {
     width: 100%;
-    height: 200px;
+    height: 250px; /* Adjusted height */
     object-fit: cover;
-    cursor: pointer; /* Add cursor pointer to indicate clickability */
-  }
-  
-  .destination-description {
-    padding: 1.5rem;
-    color: #333;
-    flex-grow: 1;
-    display: flex;
-    flex-direction: column;
-  }
-  
-  .destination-description h3 {
-    font-size: 1.5rem;
+    cursor: pointer; /* Indicate clickability */
+}
+
+/* Destination Information */
+.destination-info {
+    padding: 2rem; /* Adjusted padding */
+    color: #444444; /* Slightly lighter grey for text */
+}
+
+.destination-title {
+    font-size: 1.8rem; /* Larger heading size */
     margin-bottom: 1rem;
-  }
-  
-  .destination-description p {
-    font-size: 1.1rem;
+    color: #111111; /* Darker heading color */
+    font-weight: 700;
+}
+
+.destination-desc {
+    font-size: 1.3rem; /* Slightly larger paragraph size */
     line-height: 1.6;
-    flex-grow: 1;
-  }
-  
-  .modal {
-    position: fixed;
-    z-index: 9999;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    overflow: auto;
-    background-color: rgba(0, 0, 0, 0.8);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 2rem; /* Add padding to create space for header and footer */
-  }
-  
-  .modal-overlay {
+    color: #555555; /* Medium grey for text */
+}
+
+/* Modal Styles */
+.modal-overlay {
     position: fixed;
     top: 0;
     left: 0;
     width: 100vw;
     height: 100vh;
-    background-color: rgba(0, 0, 0, 0.5);
-  }
-  
-  .modal-container {
+    background-color: rgba(0, 0, 0, 0.8); /* Darker overlay for better contrast */
+    box-sizing: border-box;
+}
+
+.modal-content {
     position: relative;
-    background-color: #fff;
-    border-radius: 8px;
-    width: 100vw;
-    height: 100vh;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    background-color: rgba(255, 255, 255, 0.95); /* Slightly transparent white */
+    border-radius: 1rem; /* Border radius */
+    width: 85vw; /* Adjusted width */
+    height: 85vh; /* Adjusted height */
+    max-width: 1200px; /* Max width */
+    max-height: 800px; /* Max height */
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.25); /* Darker shadow */
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-  }
-  
-  .modal-header {
+    overflow: hidden;
+    box-sizing: border-box;
+}
+
+/* Modal Header */
+.modal-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 1rem;
-    border-bottom: 1px solid #ddd;
+    padding: 1.5rem; /* Adjusted padding */
+    border-bottom: 1px solid #e0e0e0; /* Light grey border */
     width: 100%;
-  }
-  
-  .modal-header h3 {
-    font-size: 1.5rem;
+}
+
+.modal-header h3 {
+    font-size: 1.8rem; /* Larger header size */
     font-weight: bold;
-  }
-  
-  .modal-header button {
+    color: #111111; /* Darker header color */
+}
+
+.close-button {
     background-color: transparent;
     border: none;
     cursor: pointer;
-    font-size: 1.2rem;
-    color: #666;
-  }
-  
-  .modal-body {
+    font-size: 1.6rem; /* Larger icon size */
+    color: #888888; /* Lighter grey */
+    transition: color 0.3s ease;
+}
+
+.close-button:hover {
+    color: #000000; /* Darker color on hover */
+}
+
+/* Modal Body */
+.modal-body {
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding: 1rem;
+    padding: 2rem; /* Adjusted padding */
     overflow-y: auto;
-    max-height: calc(100vh - 12rem); /* Adjust the maximum height based on header, footer, and padding */
-  }
-  
-  .modal-body img {
+    max-height: calc(100vh - 10rem); /* Adjusted max height */
+    box-sizing: border-box;
+}
+
+.modal-body img {
     max-width: 100%;
-    max-height: 400px;
+    max-height: 450px; /* Adjusted max height */
     object-fit: cover;
     border-radius: 8px;
-    margin-bottom: 1rem;
-  }
-  
-  .modal-body p {
-    font-size: 1rem;
-    line-height: 1.5;
+    margin-bottom: 1.5rem; /* Adjusted margin */
+}
+
+.modal-body p {
+    font-size: 1.2rem; /* Larger paragraph size */
+    line-height: 1.6;
     text-align: justify;
-  }
-  
-  @media (max-width: 250px) {
-    .form-container {
-      flex-direction: column;
+    color: #666666; /* Medium grey text color */
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .form-section {
+        flex-direction: column;
     }
-  
-    .explore-field,
-    .destinations-field {
-      padding: 1rem;
-      flex: 1 1 auto;
-    }
-  
-    .destination-description {
-      padding: 1rem;
-    }
-  
+
     .destination-card {
-      flex: 0 0 calc(50% - 1rem); /* Adjust this value as needed */
-      min-width: 200px; /* Adjust the minimum width for smaller screens */
+        flex: 0 0 calc(100% - 1rem); /* Full width on smaller screens */
     }
-  }
+}

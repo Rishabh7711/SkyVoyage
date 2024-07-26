@@ -1,53 +1,51 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import '../styles/Home.css';
-import destination1Image from '../assets/destination1.jpg';
-import destination2Image from '../assets/destination2.jpg';
-import destination3Image from '../assets/destination3.jpg';
+import destination1 from '../assets/destination1.jpg';
+import destination2 from '../assets/destination2.webp';
+import destination3 from '../assets/destination3.jpg';
 
 const Home = () => {
   const navigate = useNavigate();
-  const [showModal, setShowModal] = useState(false);
-  const [modalContent, setModalContent] = useState(null);
+  const [modalVisible, setModalVisible] = useState(false);
+  const [currentDestination, setCurrentDestination] = useState(null);
   const modalRef = useRef(null);
 
-  const handleSearchFlight = () => {
+  const searchFlight = () => {
     navigate('/search');
   };
 
-  const destinations = [
+  const featuredDestinations = [
     {
-      image: destination1Image,
-      title: 'Amalfi Coast, Italy',
-      description: 'There are a few destinations in the world that make it onto every traveler\'s bucket list, and the Amalfi Coast is one of them. From legendary Positano to hilltop Ravello, the glamour of Italy\'s most famous peninsula—with its pastel-colored towns cascading down to the Mediterranean, olive groves, and endless limoncello—has not waned for centuries.',
+      image: destination1,
+      title: 'Barcelona',
+      description: "The vibrant hues of Gaudí’s masterpieces, the tantalizing aroma of paella by the beach, and the rhythmic beats of flamenco echoing through the streets  welcome to Barcelona! As one of the cheapest places to fly from the UK, this Catalan jewel offers a blend of rich history and modern flair, making it an irresistible escape for many",
     },
     {
-      image: destination2Image,
-      title: 'Provence, France',
-      description: 'Lavender fields that stretch over the horizon are an iconic image of Provence, but there\'s far more beauty here than just its sweet-smelling flowers—including Michelin-starred cuisine, art studios used by names like Matisse and Cézanne, and scenic roads that pass by sugar-white beaches, mountain passes, and the glittering blues of the Mediterranean Sea.',
+      image: destination2,
+      title: 'Berlin',
+      description: "Drenched in tales of yesteryears and buzzing with contemporary energy, Berlin is a siren song for the intrepid explorer. Ranking high among the cheapest places to fly from the UK, this German metropolis seamlessly weaves its rich heritage with a dynamic, modern-day ethos. Envision meandering through lanes echoing historical sagas, only to encounter a trailblazing art exhibit or a spontaneous music gig.",
     },
     {
-      image: destination3Image,
-      title: 'The Storr, Scotland',
-      description: 'The Isle of Skye, in the far west Scottish Highlands, is home to landscapes so supernatural that it\'s become a go-do backdrop for countless fantasy movies. Especially moving are the Storr, a formation of rocky pinnacles that jut out like spikes from a grassy hillside overlooking the island\'s rugged coastline. You have to hike to get there, but don\'t be deterred by the weather: Scotland\'s famous rain and mist make it look that much more magical.',
+      image: destination3,
+      title: 'Warsaw',
+      description: "A fusion of time-honored traditions and contemporary flair, Warsaw stands as a beacon of Europe’s enduring spirit. Ranking among the cheapest places to fly from the UK, this Polish metropolis promises a deep dive into cultural riches without straining the purse strings. Its competitive airfare, when compared to other European cities, owes much to airlines like Wizz Air and Ryanair, who have recognized and championed Warsaw’s emerging appeal.",
     },
   ];
 
-  const handleImageClick = (destination) => {
-    setModalContent(destination);
-    setShowModal(true);
+  const openModal = (destination) => {
+    setCurrentDestination(destination);
+    setModalVisible(true);
   };
 
   const closeModal = () => {
-    setShowModal(false);
-    setModalContent(null);
+    setModalVisible(false);
+    setCurrentDestination(null);
   };
 
   useEffect(() => {
-    const modal = modalRef.current;
-
     const handleClickOutside = (event) => {
-      if (modal && !modal.contains(event.target)) {
+      if (modalRef.current && !modalRef.current.contains(event.target)) {
         closeModal();
       }
     };
@@ -60,35 +58,31 @@ const Home = () => {
   }, []);
 
   return (
-    <div className="main">
-      <section className="max-w-6xl mx-auto py-12">
-        <div className="form-container grid grid-cols-1 md:grid-cols-2 gap-8">
-          <div className="explore-field">
-            <div className="bg-white rounded-lg shadow-md p-6">
-              <h2 className="font-bold text-2xl mb-4">Explore the World with Us</h2>
-              <p className="mb-4">
-                Book your next adventure with AeroFly Airlines. Discover new destinations, create unforgettable memories, and experience the world like never before.
-              </p>
-              <button className="button bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" onClick={handleSearchFlight}>
+    <div className="main-content">
+      <section className="container mx-auto py-12">
+        <div className="form-section grid grid-cols-1 md:grid-cols-2 gap-8">
+          <div className="explore-section">
+            <div className="card bg-white rounded-lg shadow-md p-6">
+              <button className="cta-button bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" onClick={searchFlight}>
                 Book Now
               </button>
             </div>
           </div>
-          <div className="destinations-field">
-            <div className="bg-white rounded-lg shadow-md p-6">
-              <h2 className="font-bold text-2xl mb-4">Featured Destinations</h2>
-              <div className="featured-destinations grid grid-cols-1 md:grid-cols-3 gap-4">
-                {destinations.map((destination, index) => (
+          <div className="destinations-section">
+            <div className="card bg-white rounded-lg shadow-md p-6">
+              <h2 className="title font-bold text-2xl mb-4">Featured Destinations</h2>
+              <div className="destinations-grid grid grid-cols-1 md:grid-cols-3 gap-4">
+                {featuredDestinations.map((destination, index) => (
                   <div key={index} className="destination-card">
                     <img
                       src={destination.image}
                       alt={destination.title}
-                      className="destination-image w-full h-48 object-cover rounded-t-lg cursor-pointer"
-                      onClick={() => handleImageClick(destination)}
+                      className="destination-img w-full h-48 object-cover rounded-t-lg cursor-pointer"
+                      onClick={() => openModal(destination)}
                     />
-                    <div className="destination-description p-4">
-                      <h3 className="font-bold text-lg mb-2">{destination.title}</h3>
-                      <p className="text-sm">{destination.description}</p>
+                    <div className="destination-info p-4">
+                      <h3 className="destination-title font-bold text-lg mb-2">{destination.title}</h3>
+                      <p className="destination-desc text-sm">{destination.description}</p>
                     </div>
                   </div>
                 ))}
@@ -98,23 +92,20 @@ const Home = () => {
         </div>
       </section>
 
-      {showModal && (
-        <div className="modal" ref={modalRef}>
-          <div className="modal-overlay" onClick={closeModal}></div>
-          <div className="modal-container">
-            <div className="modal-content">
-              <div className="modal-header">
-                <h3>{modalContent.title}</h3>
-                <button onClick={closeModal} className="close">
-                  <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" />
-                  </svg>
-                </button>
-              </div>
-              <div className="modal-body">
-                <img src={modalContent.image} alt={modalContent.title} />
-                <p>{modalContent.description}</p>
-              </div>
+      {modalVisible && (
+        <div className="modal-overlay" ref={modalRef}>
+          <div className="modal-content">
+            <div className="modal-header">
+              <h3>{currentDestination.title}</h3>
+              <button onClick={closeModal} className="close-button">
+                <svg className="close-icon h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" />
+                </svg>
+              </button>
+            </div>
+            <div className="modal-body">
+              <img src={currentDestination.image} alt={currentDestination.title} className="modal-image" />
+              <p>{currentDestination.description}</p>
             </div>
           </div>
         </div>

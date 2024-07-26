@@ -7,12 +7,10 @@ import NotFound from './pages/NotFound';
 import ProtectedRoute from './components/ProtectedRoute';
 import SeatSelection from './pages/SeatSelection';
 import SearchFlight from './pages/SearchFlight';
-import BookingConfirmation from './pages/BookingConfirmation';
 import Payment from './pages/Payment';
-import PrintTicket from './pages/FlightOptions';
 import Header from './components/Header';
 import Footer from './components/Footer';
-import backgroundImage from './assets/background.jfif';
+import backgroundImage from './assets/flight.webp';
 import FlightOptions from './pages/FlightOptions';
 
 function Logout() {
@@ -55,7 +53,6 @@ function App() {
             />  
             <Route path="/seatSelection" element={<ProtectedRoute><SeatSelection /></ProtectedRoute>} />
             <Route path="/search" element={<ProtectedRoute><SearchFlight /></ProtectedRoute>} />
-            <Route path="/bookingConfirm" element={<ProtectedRoute><SeatSelection /><BookingConfirmation/></ProtectedRoute>} />
             <Route path="/payment" element={<ProtectedRoute><Payment /></ProtectedRoute>} />
             <Route path="/flight" element={<ProtectedRoute><FlightOptions /></ProtectedRoute>} />
             <Route path="/login" element={<Login />} />

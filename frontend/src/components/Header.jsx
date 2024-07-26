@@ -40,7 +40,7 @@ const Header = () => {
       <nav>
         <div className="logo">
           <Link to="/" onClick={() => handleNavigation('/')}>
-            AeroFly
+          SkyVoyage
           </Link>
         </div>
         <div className={`menu-icon ${showMenu ? 'open' : ''}`} onClick={toggleMenu}>
@@ -75,11 +75,11 @@ const Header = () => {
                 Booking
               </Link>
             </li> */}
-            <li>
+            {/* <li>
               <Link to="/payment" onClick={() => handleNavigation('/payment')}>
                 Payment
               </Link>
-            </li>
+            </li> */}
             <div className="login-signup">
               <button onClick={handleLogout}>Logout</button>
             </div>
